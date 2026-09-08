@@ -13,7 +13,7 @@ import dash
 from dash import html, dcc, callback, Input, Output
 import dash_bootstrap_components as dbc
 import plotly.express as px
-import plotly.graph_objects as go
+import pandas as pd
 
 from utils.data_loader import load_clean_data, carrier_options, year_options
 
@@ -105,9 +105,15 @@ def update_map(year_range, carrier):
     filtered = _filtered(year_range, carrier)
 
     if filtered.empty:
-        empty_fig = go.Figure(go.Choropleth(locationmode="USA-states"))
+        empty_df = pd.DataFrame({"state": [], "delay_rate": []})
+        empty_fig = px.choropleth(
+            empty_df,
+            locations="state",
+            locationmode="USA-states",
+            color="delay_rate",
+            scope="usa",
+        )
         empty_fig.update_layout(
-            geo=dict(scope="usa"),
             annotations=[dict(text="No data for this selection", showarrow=False, font_size=18)],
         )
         return empty_fig
