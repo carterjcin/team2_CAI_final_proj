@@ -1,6 +1,97 @@
-body {
-    background-color: #f8f9fa;
+
+:root {
+    --navy: #103756;
+    --horizon: #2f80a9;
+    --gold: #f2a93b;
+    --cloud: #f6f9fc;
+    --ink: #14202b;
+    --slate: #5b6b79;
+    --border: #e1e8ee;
 }
+
+body {
+    background-color: var(--cloud);
+    color: var(--ink);
+    font-family: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', 'Inter', sans-serif;
+    font-weight: 700;
+    color: var(--navy);
+}
+
+/* ---- Navbar ---- */
+.navbar.bg-primary {
+    background: linear-gradient(100deg, var(--navy) 0%, var(--horizon) 100%) !important;
+}
+.navbar-brand {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+}
+.navbar .nav-link {
+    font-weight: 500;
+}
+.navbar .nav-link.active,
+.navbar .nav-link:hover {
+    color: var(--gold) !important;
+}
+
+/* ---- Page title accent underline ----
+   Targets every page's main <h2> generically (each page has exactly
+   one, and nothing else in the app uses <h2>), so no className needs
+   to be added in the Python files. */
+h2 {
+    position: relative;
+    margin-bottom: 0.25rem;
+    padding-bottom: 0.6rem;
+}
+h2::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 56px;
+    height: 4px;
+    background: var(--gold);
+    border-radius: 2px;
+}
+
+/* ---- Cards ----
+   Every dbc.Card currently in the app is a KPI card on the Overview
+   page, so styling .card generically applies the accent border
+   without needing a dedicated className. */
 .card {
-    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(16, 55, 86, 0.08);
+    border-top: 4px solid var(--gold);
+}
+.card-subtitle {
+    color: var(--slate) !important;
+}
+.card-title {
+    color: var(--navy);
+}
+
+/* ---- Controls ---- */
+.rc-slider-track {
+    background-color: var(--horizon);
+}
+.rc-slider-handle {
+    border-color: var(--horizon) !important;
+}
+.rc-slider-handle:hover,
+.rc-slider-handle:active,
+.rc-slider-handle-dragging {
+    border-color: var(--gold) !important;
+    box-shadow: 0 0 0 4px rgba(242, 169, 59, 0.2) !important;
+}
+.rc-slider-dot-active {
+    border-color: var(--horizon);
+}
+
+.text-muted {
+    color: var(--slate) !important;
 }
