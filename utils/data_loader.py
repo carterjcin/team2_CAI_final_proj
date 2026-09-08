@@ -33,8 +33,7 @@ CAUSE_COLS = {
 def load_clean_data(path=RAW_PATH) -> pd.DataFrame:
     """Load the raw BTS extract and apply cleaning steps.
 
-    Cleaning performed here (documented for the assignment's
-    "one messy thing" requirement):
+    Cleaning performed here:
       1. Drop rows where every numeric field is blank. These are
          carrier/airport pairs BTS lists for a month with zero
          recorded operations - there is no delay to analyze, and

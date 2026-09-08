@@ -12,9 +12,6 @@ written analysis/narrative were verified against the actual data
 before submission.
 --------------------------------------------------------------------
 
-This file just wires up the app shell (title, navbar, page router).
-The actual page content lives in pages/*.py and is auto-registered
-by Dash's built-in `pages` plugin (use_pages=True below).
 """
 
 import dash
