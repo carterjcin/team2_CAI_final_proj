@@ -24,6 +24,10 @@ AIRPORT_OPTIONS = airport_options(df)
 YEAR_OPTIONS = [{"label": "All years", "value": "ALL"}] + year_options(df)
 DEFAULT_AIRPORT = "ATL" if "ATL" in df["airport"].unique() else df["airport"].iloc[0]
 
+# Minimum total flights a carrier needs (in the selected window) to be
+# eligible for the recommended pick
+MIN_FLIGHTS_FOR_RECOMMENDATION = 1000
+
 METRIC_MAP = {
     "delay_rate": ("Delay rate", ".1%"),
     "cancellation_rate": ("Cancellation rate", ".1%"),
@@ -32,7 +36,7 @@ METRIC_MAP = {
 
 layout = dbc.Container(
     [
-        html.H2("Which Carrier Should You Fly?"),
+        html.H2("Which carrier should you book at this airport?"),
         dbc.Row(
             [
                 dbc.Col(
@@ -74,7 +78,13 @@ layout = dbc.Container(
             ],
             className="mb-3 g-3",
         ),
-        dcc.Graph(id="cmp-bar-chart"),
+        dbc.Row(
+            dbc.Col(
+                dbc.Card(dbc.CardBody(id="cmp-recommendation"), className="mb-3"),
+                md=6,
+            ),
+        ),
+        dbc.Card(dbc.CardBody(dcc.Graph(id="cmp-bar-chart")), className="chart-card"),
     ],
     fluid=True,
 )
@@ -82,6 +92,7 @@ layout = dbc.Container(
 
 @callback(
     Output("cmp-bar-chart", "figure"),
+    Output("cmp-recommendation", "children"),
     Input("cmp-airport-dropdown", "value"),
     Input("cmp-year-dropdown", "value"),
     Input("cmp-metric-radio", "value"),
@@ -94,7 +105,8 @@ def update_comparison(airport, year, metric):
     if subset.empty:
         fig = go.Figure()
         fig.add_annotation(text="No data for this selection", showarrow=False, font=dict(size=18))
-        return transparent_bg(fig)
+        no_data = html.Div("No data for this selection.", className="text-muted")
+        return transparent_bg(fig), no_data
 
     metric_label, fmt = METRIC_MAP[metric]
 
@@ -110,6 +122,18 @@ def update_comparison(airport, year, metric):
     ranked["delay_rate"] = ranked["arr_del15"] / ranked["arr_flights"]
     ranked["cancellation_rate"] = ranked["arr_cancelled"] / ranked["arr_flights"]
     ranked["avg_arr_delay_min"] = ranked["arr_delay"] / ranked["arr_flights"]
+
+    # Recommendation: lowest combined delay + cancellation rate, among
+    # carriers with enough flights in this window to trust the number.
+    eligible = ranked[ranked["arr_flights"] >= MIN_FLIGHTS_FOR_RECOMMENDATION]
+    if eligible.empty:
+        eligible = ranked
+    eligible = eligible.assign(combined_score=eligible["delay_rate"] + eligible["cancellation_rate"])
+    best = eligible.sort_values("combined_score").iloc[0]
+
+    ranked["highlight"] = ranked["carrier_name"].apply(
+        lambda c: "Recommended" if c == best["carrier_name"] else "Other"
+    )
     ranked = ranked.sort_values(metric, ascending=True)
 
     fig = px.bar(
@@ -120,9 +144,23 @@ def update_comparison(airport, year, metric):
         text_auto=fmt,
         labels={metric: metric_label, "carrier_name": "Carrier"},
         title=f"{metric_label} by carrier",
+        color="highlight",
+        color_discrete_map={"Recommended": "#ff9f45", "Other": "#4f8ff5"},
     )
-    fig.update_layout(margin=dict(l=10, r=10, t=50, b=10))
+    fig.update_layout(margin=dict(l=10, r=10, t=50, b=10), legend_title_text="")
     fig.update_xaxes(gridcolor="#e0e0e0")
-    fig.update_yaxes(gridcolor="#e0e0e0")
+    fig.update_yaxes(gridcolor="#e0e0e0", autorange="reversed")
 
-    return transparent_bg(fig)
+    recommendation = html.Div(
+        [
+            html.H6("Recommended for this airport", className="card-subtitle text-muted"),
+            html.H4(best["carrier_name"], className="card-title"),
+            html.Small(
+                f"{best['delay_rate']:.1%} delay rate \u00b7 {best['cancellation_rate']:.1%} cancellation rate "
+                f"({int(best['arr_flights']):,} flights)",
+                className="text-muted",
+            ),
+        ]
+    )
+
+    return transparent_bg(fig), recommendation

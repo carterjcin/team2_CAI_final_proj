@@ -24,7 +24,6 @@ app = Dash(
     title="Flight Delay Explorer",
 )
 
-# exposed for gunicorn / Render deployment: `gunicorn app:server`
 server = app.server
 
 navbar = dbc.NavbarSimple(

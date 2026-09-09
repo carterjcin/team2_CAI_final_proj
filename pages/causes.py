@@ -22,7 +22,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 from utils.data_loader import load_clean_data, airport_options, carrier_options, CAUSE_COLS
-from utils.chart_theme import transparent_bg
+from utils.chart_theme import transparent_bg, CAUSE_COLOR_MAP
 
 dash.register_page(__name__, path="/causes", name="Delay Causes", order=3)
 
@@ -34,7 +34,7 @@ MIN_YEAR, MAX_YEAR = int(df["year"].min()), int(df["year"].max())
 
 layout = dbc.Container(
     [
-        html.H2("Who's Responsible for Flight Delays?"),
+        html.H2("When flights are delayed here, who's responsible?"),
         dbc.Row(
             [
                 dbc.Col(
@@ -63,14 +63,13 @@ layout = dbc.Container(
                 ),
                 dbc.Col(
                     [
-                        html.Label("Year range"),
-                        dcc.RangeSlider(
-                            id="cause-year-range",
-                            min=MIN_YEAR,
-                            max=MAX_YEAR,
-                            step=1,
-                            value=[MIN_YEAR, MAX_YEAR],
-                            marks={y: str(y) for y in range(MIN_YEAR, MAX_YEAR + 1)},
+                        html.Label("Year"),
+                        dcc.RadioItems(
+                            id="cause-year-radio",
+                            options=[{"label": f" {y}", "value": y} for y in range(MIN_YEAR, MAX_YEAR + 1)],
+                            value=MAX_YEAR,
+                            inline=True,
+                            labelStyle={"marginRight": "12px"},
                         ),
                     ],
                     md=4,
@@ -80,8 +79,14 @@ layout = dbc.Container(
         ),
         dbc.Row(
             [
-                dbc.Col(dcc.Graph(id="cause-pie-chart"), md=5),
-                dbc.Col(dcc.Graph(id="cause-bar-chart"), md=7),
+                dbc.Col(
+                    dbc.Card(dbc.CardBody(dcc.Graph(id="cause-pie-chart")), className="chart-card"),
+                    md=5,
+                ),
+                dbc.Col(
+                    dbc.Card(dbc.CardBody(dcc.Graph(id="cause-bar-chart")), className="chart-card"),
+                    md=7,
+                ),
             ]
         ),
     ],
@@ -94,11 +99,10 @@ layout = dbc.Container(
     Output("cause-bar-chart", "figure"),
     Input("cause-airport-dropdown", "value"),
     Input("cause-carrier-dropdown", "value"),
-    Input("cause-year-range", "value"),
+    Input("cause-year-radio", "value"),
 )
-def update_causes(airport, carrier, year_range):
-    lo, hi = year_range
-    subset = df[(df["airport"] == airport) & (df["year"] >= lo) & (df["year"] <= hi)]
+def update_causes(airport, carrier, year_choice):
+    subset = df[(df["airport"] == airport) & (df["year"] == year_choice)]
     if carrier != "ALL":
         subset = subset[subset["carrier"] == carrier]
 
@@ -115,7 +119,8 @@ def update_causes(airport, carrier, year_range):
         totals, names="cause", values="minutes",
         title="Share of total delay minutes",
         hole=0.4,
-        color_discrete_sequence=px.colors.qualitative.Safe,
+        color="cause",
+        color_discrete_map=CAUSE_COLOR_MAP,
     )
 
     monthly = (
@@ -131,7 +136,7 @@ def update_causes(airport, carrier, year_range):
         y="minutes",
         color="cause",
         title="Delay minutes by month, stacked by cause",
-        color_discrete_sequence=px.colors.qualitative.Safe,
+        color_discrete_map=CAUSE_COLOR_MAP,
     )
     bar_fig.update_layout(barmode="stack", xaxis_title="Month", yaxis_title="Total delay minutes")
     bar_fig.update_xaxes(gridcolor="#e0e0e0")
