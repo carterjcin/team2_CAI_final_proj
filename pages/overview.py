@@ -28,7 +28,7 @@ MAX_YEAR = int(df["year"].max())
 
 layout = dbc.Container(
     [
-        html.H2("Which states have the worst flight delays?"),
+        html.H2("Where are the Worst Flight Delays?"),
         html.P(
             "Arrival delay rate = share of flights that landed 15+ minutes late, "
             "aggregated by the state the destination airport is in. "

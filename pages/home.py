@@ -34,7 +34,7 @@ layout = dbc.Container(
                     ],
                     className="hero-text",
                 ),
-                html.Img(src="/assets/plane.png", className="hero-plane"),
+                html.Img(src="/assets/plane3.png", className="hero-plane"),
             ],
             className="hero-landing",
         ),

@@ -1,7 +1,8 @@
 :root {
-    --navy: #103756;
-    --horizon: #2f80a9;
-    --gold: #f2a93b;
+    --navy: #1a56c9;
+    --horizon: #4f8ff5;
+    --sky-light: #eaf4ff;
+    --gold: #ff9f45;
     --cloud: #f6f9fc;
     --ink: #14202b;
     --slate: #5b6b79;
@@ -28,13 +29,21 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'Poppins', sans-serif;
     font-weight: 700;
     letter-spacing: 0.01em;
+    text-transform: uppercase;
 }
 .navbar .nav-link {
-    font-weight: 500;
+    background-color: var(--gold);
+    color: #fff !important;
+    font-weight: 600;
+    border-radius: 999px;
+    padding: 0.45rem 1.25rem !important;
+    margin: 0 0.3rem;
+    transition: background-color 0.15s ease, color 0.15s ease;
 }
 .navbar .nav-link.active,
 .navbar .nav-link:hover {
-    color: var(--gold) !important;
+    background-color: #fff;
+    color: var(--navy) !important;
 }
 
 /* ---- Page title accent underline ----
@@ -85,7 +94,7 @@ h2::after {
 .rc-slider-handle:active,
 .rc-slider-handle-dragging {
     border-color: var(--gold) !important;
-    box-shadow: 0 0 0 4px rgba(242, 169, 59, 0.2) !important;
+    box-shadow: 0 0 0 4px rgba(255, 159, 69, 0.2) !important;
 }
 .rc-slider-dot-active {
     border-color: var(--horizon);
@@ -97,10 +106,11 @@ h2::after {
 
 /* ---- Landing page hero ---- */
 .hero-landing {
-    background: linear-gradient(100deg, var(--navy) 0%, var(--horizon) 100%);
-    border-radius: 14px;
-    padding: 3rem 2rem;
-    margin-top: 1.5rem;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--horizon) 55%, var(--sky-light) 100%);
+    border-radius: 14px 14px 50% 50% / 14px 14px 110px 110px;
+    padding: 3rem 2rem 6.5rem;
+    margin-top: 1rem;
+    min-height: 65vh;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -111,28 +121,56 @@ h2::after {
 .hero-text {
     color: #fff;
     max-width: 480px;
+    align-self: center;
 }
 .hero-text h1 {
     color: #fff;
-    font-size: 2.5rem;
+    text-transform: uppercase;
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    line-height: 1.05;
+    letter-spacing: 0.01em;
     margin-bottom: 0.75rem;
 }
 .hero-text p {
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(255, 255, 255, 0.9);
     font-size: 1.05rem;
 }
 .hero-plane {
-    max-width: 380px;
-    width: 100%;
+    max-width: 460px;
+    max-height: 320px;
+    width: auto;
     height: auto;
+    object-fit: contain;
+    align-self: center;
     filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.25));
 }
+
+/* Orange pill CTA button (dbc.Button color="warning") */
+.btn-warning {
+    background-color: var(--gold) !important;
+    border-color: var(--gold) !important;
+    color: #fff !important;
+    border-radius: 999px !important;
+    font-weight: 600;
+    padding: 0.6rem 1.6rem;
+}
+.btn-warning:hover {
+    background-color: #fff !important;
+    color: var(--navy) !important;
+    border-color: var(--gold) !important;
+}
+
 @media (max-width: 768px) {
     .hero-landing {
         flex-direction: column;
         text-align: center;
+        border-radius: 14px 14px 40% 40% / 14px 14px 60px 60px;
     }
     .hero-text {
         max-width: 100%;
+    }
+    .hero-plane {
+        max-width: 280px;
+        max-height: 220px;
     }
 }

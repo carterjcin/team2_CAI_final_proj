@@ -32,7 +32,7 @@ METRIC_MAP = {
 
 layout = dbc.Container(
     [
-        html.H2("Which carrier should you book at this airport?"),
+        html.H2("Which Carrier Should You Fly?"),
         dbc.Row(
             [
                 dbc.Col(
