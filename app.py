@@ -3,11 +3,12 @@ app.py — Flight Delay Explorer
 
 --------------------------------------------------------------------
 Used Claude to: brainstorm the dataset/page structure, scaffold the
-Dash multi-page layout and callbackw, and draft the data
-cleaning steps in utils/data_loader.py. All code was reviewed, run,
-and edited by the team; callback logic, chart choices, and the
-written analysis/narrative were verified against the actual data
-before submission.
+Dash multi-page layout and callbacks, and draft the data
+cleaning steps in utils/data_loader.py. Claude also helped create the
+style sheet as we wanted a clean, and professional airline/travel look
+All code was reviewed, run, and edited by the team; callback logic, 
+chart choices, and the written analysis/narrative were verified
+against the actual data before submission.
 --------------------------------------------------------------------
 
 """
