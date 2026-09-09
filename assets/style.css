@@ -50,10 +50,7 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--navy) !important;
 }
 
-/* ---- Page title accent underline ----
-   Targets every page's main <h2> generically (each page has exactly
-   one, and nothing else in the app uses <h2>), so no className needs
-   to be added in the Python files. */
+/* ---- Page title accent underline ---- */
 h2 {
     position: relative;
     margin-bottom: 0.25rem;
@@ -70,10 +67,7 @@ h2::after {
     border-radius: 2px;
 }
 
-/* ---- Cards ----
-   Every dbc.Card currently in the app is a KPI card on the Overview
-   page, so styling .card generically applies the accent border
-   without needing a dedicated className. */
+/* ---- Cards ----. */
 .card {
     border: 1px solid var(--border);
     border-radius: 10px;

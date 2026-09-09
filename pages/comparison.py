@@ -154,7 +154,7 @@ def update_comparison(airport, year, metric):
 
     recommendation = html.Div(
         [
-            html.H6("Recommended for this airport", className="card-subtitle text-muted"),
+            html.H6("Recommended carrier for this airport:", className="card-subtitle text-muted"),
             html.H4(best["carrier_name"], className="card-title"),
             html.Small(
                 f"{best['delay_rate']:.1%} delay rate \u00b7 {best['cancellation_rate']:.1%} cancellation rate "
