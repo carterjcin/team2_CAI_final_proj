@@ -1,4 +1,3 @@
-
 :root {
     --navy: #1a56c9;
     --horizon: #4f8ff5;
@@ -24,17 +23,17 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ---- Navbar ---- */
 .navbar.bg-primary {
-    background-image: linear-gradient(100deg, var(--navy) 0%, var(--horizon) 100%),
-                       url("cloud.png");
-    background-repeat: no-repeat, no-repeat;
-    background-position: left center, 42% center;
-    background-size: cover, 130px auto;
+    background: linear-gradient(100deg, var(--navy) 0%, var(--horizon) 100%) !important;
 }
 .navbar-brand {
     font-family: 'Poppins', sans-serif;
     font-weight: 700;
     letter-spacing: 0.01em;
     text-transform: uppercase;
+}
+.navbar-brand:hover,
+.navbar-brand:focus {
+    color: var(--gold) !important;
 }
 .navbar .nav-link {
     background-color: var(--gold);
@@ -71,10 +70,7 @@ h2::after {
     border-radius: 2px;
 }
 
-/* ---- Cards ----
-   Every dbc.Card currently in the app is a KPI card on the Overview
-   page, so styling .card generically applies the accent border
-   without needing a dedicated className. */
+/* ---- Cards ---- */
 .card {
     border: 1px solid var(--border);
     border-radius: 10px;
