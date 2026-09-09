@@ -34,7 +34,7 @@ MIN_YEAR, MAX_YEAR = int(df["year"].min()), int(df["year"].max())
 
 layout = dbc.Container(
     [
-        html.H2("When flights are delayed here, who's responsible?"),
+        html.H2("Who's Responsible for Flight Delays?"),
         dbc.Row(
             [
                 dbc.Col(

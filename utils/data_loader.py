@@ -1,8 +1,5 @@
 """
 Data loading and cleaning for the Airline Delay Cause dataset (US DOT / BTS).
-
-Source: https://www.transtats.bts.gov/OT_Delay/OT_DelayCause1.asp
-Raw file: data/Airline_Delay_Cause.csv (one row per year-month-carrier-airport)
 """
 
 import pandas as pd
@@ -40,8 +37,7 @@ def load_clean_data(path=RAW_PATH) -> pd.DataFrame:
          leaving them in would corrupt averages with NaNs.
       2. Coerce numeric columns (some arrive as object dtype because
          of stray blanks) and fill any remaining gaps with 0.
-      3. Parse the free-text `airport_name` field
-         ("Moline, IL: Quad Cities International") into separate
+      3. Parse the free-text `airport_name` field into separate
          city / state / airport_full_name columns so the state can
          be used for the choropleth map.
       4. Build a proper datetime `date` column from year + month for

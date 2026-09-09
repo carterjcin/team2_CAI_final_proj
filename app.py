@@ -1,11 +1,10 @@
 """
 app.py — Flight Delay Explorer
-Starter / entry point for the multi-page Dash app.
 
 --------------------------------------------------------------------
-AI ASSISTANCE DISCLOSURE (per assignment Generative AI Policy)
+AI ASSISTANCE DISCLOSURE:
 Used Claude to: brainstorm the dataset/page structure, scaffold the
-Dash multi-page layout and callback skeletons, and draft the data
+Dash multi-page layout and callbackw, and draft the data
 cleaning steps in utils/data_loader.py. All code was reviewed, run,
 and edited by the team; callback logic, chart choices, and the
 written analysis/narrative were verified against the actual data
@@ -15,7 +14,7 @@ before submission.
 """
 
 import dash
-from dash import Dash, html, dcc
+from dash import Dash, html
 import dash_bootstrap_components as dbc
 
 app = Dash(
