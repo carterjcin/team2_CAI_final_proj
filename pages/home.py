@@ -9,7 +9,30 @@ import dash
 from dash import html
 import dash_bootstrap_components as dbc
 
+from utils.data_loader import load_clean_data
+
 dash.register_page(__name__, path="/", name="Home", order=0)
+
+df = load_clean_data()
+
+# A curated set of recognizable mainline carriers (as opposed to
+# regional operators like "PSA Airlines Inc."), mapped to their logo
+# file directly under assets/. Each logo file is supplied by the
+# team, not generated here.
+_CARRIER_LOGOS = {
+    "Delta Air Lines Network": "delta.png",
+    "American Airlines Network": "american.png",
+    "United Air Lines Network": "united.png",
+    "Southwest Airlines": "southwest.png",
+    "Alaska Airlines Network": "alaska.png",
+    "JetBlue Airways": "jetblue.png",
+    "Spirit Airlines": "spirit.png",
+    "Frontier Airlines": "frontier.png",
+    "Hawaiian Airlines Network": "hawaiian.png",
+    "Allegiant Air": "allegiant.png",
+}
+_AVAILABLE = set(df["carrier_name"].unique())
+TICKER_LOGOS = [(name, file) for name, file in _CARRIER_LOGOS.items() if name in _AVAILABLE]
 
 layout = dbc.Container(
     [
@@ -34,9 +57,24 @@ layout = dbc.Container(
                     ],
                     className="hero-text",
                 ),
-                html.Img(src="/assets/plane3.png", className="hero-plane"),
+                html.Img(src="/assets/plane.png", className="hero-plane"),
             ],
             className="hero-landing",
+        ),
+        html.Div(
+            html.Div(
+                [
+                    html.Img(
+                        src=f"/assets/{file}",
+                        alt="",
+                        title=name,
+                        className="ticker-logo",
+                    )
+                    for name, file in TICKER_LOGOS * 2
+                ],
+                className="ticker-track",
+            ),
+            className="ticker-wrap",
         ),
     ],
     fluid=True,

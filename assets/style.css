@@ -70,7 +70,10 @@ h2::after {
     border-radius: 2px;
 }
 
-/* ---- Cards ---- */
+/* ---- Cards ----
+   Every dbc.Card currently in the app is a KPI card on the Overview
+   page, so styling .card generically applies the accent border
+   without needing a dedicated className. */
 .card {
     border: 1px solid var(--border);
     border-radius: 10px;
@@ -178,5 +181,35 @@ h2::after {
     .hero-plane {
         max-width: 280px;
         max-height: 220px;
+    }
+}
+
+/* ---- Scrolling carrier ticker (Home page) ---- */
+.ticker-wrap {
+    overflow: hidden;
+    white-space: nowrap;
+    margin-top: 2rem;
+    padding: 1.25rem 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+.ticker-track {
+    display: inline-block;
+    white-space: nowrap;
+    animation: ticker-scroll 28s linear infinite;
+}
+.ticker-logo {
+    display: inline-block;
+    height: 42px;
+    width: auto;
+    margin: 0 2.5rem;
+    vertical-align: middle;
+}
+@keyframes ticker-scroll {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
     }
 }
