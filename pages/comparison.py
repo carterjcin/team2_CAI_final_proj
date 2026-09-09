@@ -15,8 +15,9 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 from utils.data_loader import load_clean_data, airport_options, year_options
+from utils.chart_theme import transparent_bg
 
-dash.register_page(__name__, path="/comparison", name="Comparison")
+dash.register_page(__name__, path="/comparison", name="Comparison", order=2)
 
 df = load_clean_data()
 AIRPORT_OPTIONS = airport_options(df)
@@ -93,7 +94,7 @@ def update_comparison(airport, year, metric):
     if subset.empty:
         fig = go.Figure()
         fig.add_annotation(text="No data for this selection", showarrow=False, font=dict(size=18))
-        return fig
+        return transparent_bg(fig)
 
     metric_label, fmt = METRIC_MAP[metric]
 
@@ -121,5 +122,7 @@ def update_comparison(airport, year, metric):
         title=f"{metric_label} by carrier",
     )
     fig.update_layout(margin=dict(l=10, r=10, t=50, b=10))
+    fig.update_xaxes(gridcolor="#e0e0e0")
+    fig.update_yaxes(gridcolor="#e0e0e0")
 
-    return fig
+    return transparent_bg(fig)

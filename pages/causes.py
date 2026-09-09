@@ -22,8 +22,9 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 from utils.data_loader import load_clean_data, airport_options, carrier_options, CAUSE_COLS
+from utils.chart_theme import transparent_bg
 
-dash.register_page(__name__, path="/causes", name="Delay Causes")
+dash.register_page(__name__, path="/causes", name="Delay Causes", order=3)
 
 df = load_clean_data()
 AIRPORT_OPTIONS = airport_options(df)
@@ -104,6 +105,7 @@ def update_causes(airport, carrier, year_range):
     if subset.empty or subset[list(CAUSE_COLS.keys())].sum().sum() == 0:
         empty = go.Figure()
         empty.add_annotation(text="No delay data for this selection", showarrow=False, font=dict(size=18))
+        empty = transparent_bg(empty)
         return empty, empty
 
     totals = subset[list(CAUSE_COLS.keys())].sum().rename(index=CAUSE_COLS).reset_index()
@@ -132,5 +134,7 @@ def update_causes(airport, carrier, year_range):
         color_discrete_sequence=px.colors.qualitative.Safe,
     )
     bar_fig.update_layout(barmode="stack", xaxis_title="Month", yaxis_title="Total delay minutes")
+    bar_fig.update_xaxes(gridcolor="#e0e0e0")
+    bar_fig.update_yaxes(gridcolor="#e0e0e0")
 
-    return pie_fig, bar_fig
+    return transparent_bg(pie_fig), transparent_bg(bar_fig)
