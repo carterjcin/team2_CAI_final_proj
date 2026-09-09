@@ -18,8 +18,8 @@ pick out of a specific airport.
   (https://www.transtats.bts.gov/OT_Delay/OT_DelayCause1.asp)
 - **Size**: 69,600 raw rows &rarr; ~69,500 after cleaning; one row per
   (year, month, carrier, airport); 370 airports, 21 carriers,
-  July 2023 &ndash; June 2026 (36 months).
-- **What was messy about it**: ~51 rows were carrier/airport pairs
+  July 2023 - June 2026 (36 months).
+- **What was messy about it**: 51 rows were carrier/airport pairs
   BTS lists for a month with *zero* recorded flights - every numeric
   column was blank, which would have silently corrupted averages if
   left in, so they're dropped. The airport's city/state also only
@@ -65,6 +65,5 @@ https://team2-cai-final-proj.onrender.com/
 ## AI usage
 
 See the disclosure comment block at the top of `app.py`. Claude was
-used to scaffold the multi-page structure, the data-cleaning steps,
-and callback skeletons; all logic was reviewed and run against the
-real data before submission.
+used to outline the multi-page structure, the data-cleaning steps,
+and callback skeletons; all logic was reviewed prior to submission.
