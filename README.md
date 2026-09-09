@@ -5,7 +5,7 @@ airport, carrier, and cause of delay.
 
 ## The question
 
-**Which airline is most reliable at your airport - and is it improving?**
+**Which airline is the most reliable at your airport - and is it improving?**
 
 ## Who it's for
 
@@ -18,7 +18,7 @@ pick out of a specific airport.
   (https://www.transtats.bts.gov/OT_Delay/OT_DelayCause1.asp)
 - **Size**: 69,600 raw rows &rarr; ~69,500 after cleaning; one row per
   (year, month, carrier, airport); 370 airports, 21 carriers,
-  July 2023 - June 2026 (36 months).
+  June 2023 - June 2026 (36 months).
 - **What was messy about it**: 51 rows were carrier/airport pairs
   BTS lists for a month with *zero* recorded flights - every numeric
   column was blank, which would have silently corrupted averages if
