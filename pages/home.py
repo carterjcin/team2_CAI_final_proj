@@ -15,10 +15,8 @@ dash.register_page(__name__, path="/", name="Home", order=0)
 
 df = load_clean_data()
 
-# A curated set of recognizable mainline carriers (as opposed to
-# regional operators like "PSA Airlines Inc."), mapped to their logo
-# file directly under assets/. Each logo file is supplied by the
-# team, not generated here.
+# A curated set of recognizable mainline carriers mapped to their logo
+# file directly under assets/.
 _CARRIER_LOGOS = {
     "Delta Air Lines Network": "delta.png",
     "American Airlines Network": "american.png",
@@ -33,6 +31,7 @@ _CARRIER_LOGOS = {
 }
 _AVAILABLE = set(df["carrier_name"].unique())
 TICKER_LOGOS = [(name, file) for name, file in _CARRIER_LOGOS.items() if name in _AVAILABLE]
+#Claude provided the code for the moving banner
 
 layout = dbc.Container(
     [
