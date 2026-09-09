@@ -24,10 +24,6 @@ AIRPORT_OPTIONS = airport_options(df)
 YEAR_OPTIONS = [{"label": "All years", "value": "ALL"}] + year_options(df)
 DEFAULT_AIRPORT = "ATL" if "ATL" in df["airport"].unique() else df["airport"].iloc[0]
 
-# Minimum total flights a carrier needs (in the selected window) to be
-# eligible for the recommended pick
-MIN_FLIGHTS_FOR_RECOMMENDATION = 1000
-
 METRIC_MAP = {
     "delay_rate": ("Delay rate", ".1%"),
     "cancellation_rate": ("Cancellation rate", ".1%"),
@@ -123,12 +119,17 @@ def update_comparison(airport, year, metric):
     ranked["cancellation_rate"] = ranked["arr_cancelled"] / ranked["arr_flights"]
     ranked["avg_arr_delay_min"] = ranked["arr_delay"] / ranked["arr_flights"]
 
+    # Minimum total flights a carrier needs (in the selected window) 
+    # to be eligible for the recommended pick
+    MIN_FLIGHTS_FOR_RECOMMENDATION = 1000
+
     # Recommendation: lowest combined delay + cancellation rate, among
     # carriers with enough flights in this window to trust the number.
     eligible = ranked[ranked["arr_flights"] >= MIN_FLIGHTS_FOR_RECOMMENDATION]
     if eligible.empty:
         eligible = ranked
-    eligible = eligible.assign(combined_score=eligible["delay_rate"] + eligible["cancellation_rate"])
+    eligible = eligible.assign(combined_score=eligible["delay_rate"] + 
+                               eligible["cancellation_rate"])
     best = eligible.sort_values("combined_score").iloc[0]
 
     ranked["highlight"] = ranked["carrier_name"].apply(

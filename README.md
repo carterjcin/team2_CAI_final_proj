@@ -5,8 +5,7 @@ airport, carrier, and cause of delay.
 
 ## The question
 
-**Which airline should you actually book out of your airport, and is
-it getting more or less reliable over time?**
+**Which airline is most reliable at your airport - and is it improving?**
 
 ## Who it's for
 
@@ -31,7 +30,7 @@ pick out of a specific airport.
 
 | Page | Route | What it shows |
 |---|---|---|
-| Home | `/` | Landing page with a short intro and a link into Overview |
+| Home | `/` | Landing page with a short intro and a link into Overview. There is also a moving banner with different airline logos |
 | Overview | `/overview` | US choropleth map of delay rate by state, filterable by year range and carrier |
 | Comparison | `/comparison` | Ranked bar chart of carriers at one airport |
 | Delay Causes | `/causes` | Pie + stacked bar breakdown of delay minutes by cause (carrier, weather, NAs, security, late aircraft) |
