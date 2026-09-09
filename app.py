@@ -2,7 +2,6 @@
 app.py — Flight Delay Explorer
 
 --------------------------------------------------------------------
-AI ASSISTANCE DISCLOSURE:
 Used Claude to: brainstorm the dataset/page structure, scaffold the
 Dash multi-page layout and callbackw, and draft the data
 cleaning steps in utils/data_loader.py. All code was reviewed, run,
