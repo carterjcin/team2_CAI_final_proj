@@ -10,11 +10,8 @@ it getting more or less reliable over time?**
 
 ## Who it's for
 
-A frequent traveler (or a travel blogger) deciding which carrier to
-pick out of a specific airport, plus anyone curious whether delays at
-their airport are typically the airline's fault, the weather's, or
-air-traffic congestion.
-
+A frequent traveler deciding which carrier to
+pick out of a specific airport.
 ## The data
 
 - **Source**: US Department of Transportation / Bureau of
@@ -27,8 +24,7 @@ air-traffic congestion.
   BTS lists for a month with *zero* recorded flights - every numeric
   column was blank, which would have silently corrupted averages if
   left in, so they're dropped. The airport's city/state also only
-  existed buried inside one free-text field
-  (`"Moline, IL: Quad Cities International"`), which had to be
+  existed buried inside one free-text field, which had to be
   parsed apart with a regex before it could drive the state map.
 
 ## App structure
@@ -38,7 +34,7 @@ air-traffic congestion.
 | Home | `/` | Landing page with a short intro and a link into Overview |
 | Overview | `/overview` | US choropleth map of delay rate by state, filterable by year range and carrier |
 | Comparison | `/comparison` | Ranked bar chart of carriers at one airport |
-| Delay Causes | `/causes` | Pie + stacked bar breakdown of delay minutes by cause (carrier, weather, NAS, security, late aircraft) |
+| Delay Causes | `/causes` | Pie + stacked bar breakdown of delay minutes by cause (carrier, weather, NAs, security, late aircraft) |
 
 
 ## Data dictionary (raw columns)
